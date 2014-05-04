@@ -18,7 +18,7 @@ describe "Authentication" do
 			before {click_button "Sign in"}
 
 			it {should have_title("Sign in")}
-			it {should should have_error_message('Invalid')}
+			it {should have_error_message('Invalid')}
 
 			describe "after visiting another page" do
 				before {click_link "Home"}
