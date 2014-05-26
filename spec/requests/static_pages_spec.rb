@@ -16,7 +16,7 @@ describe "Static pages" do
     before { visit root_path }
 
     let(:heading) { "Sample App" }
-    let(:title)   { "" }
+    let(:title) { "" }
     it_should_behave_like("all static pages")
 
     it { should_not have_title('| Home') }
@@ -25,7 +25,7 @@ describe "Static pages" do
   describe "Help page" do
     before { visit help_path }
     let(:heading) { "Help" }
-    let(:title)   { "Help" }
+    let(:title) { "Help" }
     it_should_behave_like("all static pages")
 
     describe "for signed-in users" do
@@ -42,6 +42,27 @@ describe "Static pages" do
           expect(page).to have_selector("li##{item.id}", text: item.content)
         end
       end
+
+      it 'should have correct count' do
+        expect(page.find('.posts_count')).to have_content(user.feed.count)
+
+      end
+    end
+
+    describe "for signed-in users" do
+      let(:user) { FactoryGirl.create(:user) }
+      let(:wrong_user) { FactoryGirl.create(:user) }
+      before do
+        FactoryGirl.create(:micropost, user: user, content: "Lorem ipsum")
+        FactoryGirl.create(:micropost, user: user, content: "Dolor sit amet")
+        sign_in user
+        visit users_path(user.id)
+      end
+
+      it 'should not have delete links' do
+        # page.has
+        # page.should have_selector(:xpath, "*[@data-method='delete']")
+      end
     end
   end
 
@@ -49,7 +70,7 @@ describe "Static pages" do
     before { visit about_path }
 
     let(:heading) { "About" }
-    let(:title)   { "About" }
+    let(:title) { "About" }
     it_should_behave_like("all static pages")
   end
 
@@ -57,7 +78,7 @@ describe "Static pages" do
     before { visit contact_path }
 
     let(:heading) { "Contact" }
-    let(:title)   { "Contact" }
+    let(:title) { "Contact" }
     it_should_behave_like("all static pages")
   end
 
