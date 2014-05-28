@@ -56,6 +56,15 @@ describe "Authentication" do
 			it{should_not have_link('Profile',		href: user_path(user))}
 			it{should_not have_link('Settings',		href: edit_user_path(user))}
 
+      describe "visiting the following page" do
+        before { visit following_user_path(user) }
+        it { should have_title('Sign in') }
+      end
+
+      describe "visiting the followers page" do
+        before { visit followers_user_path(user) }
+        it { should have_title('Sign in') }
+      end
 			
 			describe "when attempting to visit a protected page" do
 				before do
